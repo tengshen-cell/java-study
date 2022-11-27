@@ -1,6 +1,8 @@
 package v1ch05.reflection;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Scanner;
 
@@ -37,14 +39,61 @@ public class ReflectionTest {
 
         System.out.print("\n{\n");
         printConstructs(cl);
+        System.out.println();
+        printMethods(cl);
+        System.out.println();
+        printFields(cl);
     }
-    
+
+    // Prints all constructors of a class
     private static void printConstructs(Class cl) {
         Constructor[] constructors = cl.getDeclaredConstructors();
         for (Constructor constructor : constructors) {
             String name = constructor.getName();
             System.out.print("  ");
             String modifiers = Modifier.toString(constructor.getModifiers());
+            if (modifiers.length() > 0) {
+                System.out.print(modifiers + " ");
+            }
+            System.out.print(name + "(");
+            Class[] parameterTypes = constructor.getParameterTypes();
+            for (int j = 0; j < parameterTypes.length; j++) {
+                if (j > 0) System.out.print(",");
+                System.out.print(parameterTypes[j].getName());
+            }
+            System.out.println("):");
+        }
+    }
+
+    public static void printMethods(Class cl) {
+        Method[] methods = cl.getDeclaredMethods();
+        for (Method method : methods) {
+            Class reType = method.getReturnType();
+            String name = method.getName();
+
+            System.out.print("  ");
+            // print modifiers, return type and method name
+            String modifiers = Modifier.toString(method.getModifiers());
+            if (modifiers.length() > 0) System.out.print(modifiers + " ");
+            System.out.print(reType.getName() + " " + name + "(");
+            Class<?>[] parameterTypes = method.getParameterTypes();
+            for (int j = 0; j < parameterTypes.length; j++) {
+                if (j > 0) System.out.print(", ");
+                System.out.print(parameterTypes[j].getName());
+            }
+            System.out.println("):");
+        }
+    }
+
+    // Prints all fields of a class
+    public static void printFields(Class cl) {
+        Field[] fields = cl.getDeclaredFields();
+        for (Field field : fields) {
+            Class<?> type = field.getType();
+            String name = field.getName();
+            String modifiers = Modifier.toString(field.getModifiers());
+            if (modifiers.length() > 0) System.out.print(modifiers + " ");
+            System.out.println(type.getName() + " " + name + ";");
         }
     }
 }
