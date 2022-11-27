@@ -28,7 +28,8 @@ public class EqualsTest {
         System.out.println("boss.toString(): " + boss);
         System.out.println("car1.equals(boss): " + car1.equals(boss));
         System.out.println("alice1.hashCode(): " + alice1.hashCode());
-        System.out.println();
+        System.out.println("bob.hashCode()" + bob.hashCode());
+        System.out.println("car1.hashCode()" + car1.hashCode());
 
     }
 }
