@@ -3,7 +3,7 @@ package v1ch06.lambda;
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Timer;
+
 
 public class LambdaTest {
     public static void main(String[] args) {
@@ -17,8 +17,8 @@ public class LambdaTest {
         Arrays.sort(planets, (first, second) -> first.length() - second.length());
         System.out.println(Arrays.toString(planets));
 
-        // Timer timer = new Timer(1000, event -> System.out.println("The time is " + new Date()));
-        // timer.start();
+        Timer timer = new Timer(1000, event -> System.out.println("The time is " + new Date()));
+        timer.start();
 
         JOptionPane.showConfirmDialog(null, "Quit program");
         System.exit(0);

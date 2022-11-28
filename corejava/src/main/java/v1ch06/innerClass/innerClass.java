@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.Instant;
-import java.util.Timer;
 
 public class innerClass {
 
@@ -30,8 +29,8 @@ class TalKingClock {
 
     public void start() {
         TimerPrinter timerPrinter = new TimerPrinter();
-        // Timer timer = new Timer(interval, timerPrinter);
-        // timer.start();
+        Timer timer = new Timer(interval, timerPrinter);
+        timer.start();
     }
 
     public class TimerPrinter implements ActionListener {
