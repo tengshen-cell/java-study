@@ -14,7 +14,6 @@ public class StackAreaDemo {
 
         anotherFun();
         Thread.sleep(10000000);
-
     }
 
     private static void anotherFun() {

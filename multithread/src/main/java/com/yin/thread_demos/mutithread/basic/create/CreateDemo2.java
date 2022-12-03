@@ -8,7 +8,6 @@ public class CreateDemo2 {
     public static final int MAX_TURN = 5;
 
     static int threadNo = 1;
-
     static class RunTarget implements Runnable {
 
         @Override
@@ -30,6 +29,7 @@ public class CreateDemo2 {
         }
 
         for (int i = 0; i < 2; i++) {
+            // 匿名内部类
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
