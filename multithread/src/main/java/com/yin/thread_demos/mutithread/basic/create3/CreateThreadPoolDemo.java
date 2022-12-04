@@ -161,4 +161,34 @@ public class CreateThreadPoolDemo {
         ScheduledExecutorService pool = Executors.newScheduledThreadPool(2);
         // pool.execute(new Ta);
     }
+
+    private static final ThreadLocal<Long> START_TIME = new ThreadLocal<>();
+
+    @Test
+    public void testHooks() {
+        ExecutorService pool = new ThreadPoolExecutor(2, 4, 60, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(2)){
+                    protected void terminated() {
+                        Print.tco("调度器已经终止！");
+                    }
+                    @Override
+                    protected void beforeExecute(Thread t, Runnable target) {
+                        Print.tco(target + "前钩子被执行");
+                        START_TIME.set(System.currentTimeMillis());
+                        super.beforeExecute(t, target);
+                    }
+
+                    protected void afterExecute(Runnable target, Throwable t) {
+                        super.afterExecute(target, t);
+
+                        long time = System.currentTimeMillis() - START_TIME.get();
+                        Print.tco(target + " 后沟子被执行，任务执行时长 (ms) :" + time);
+                        START_TIME.remove();
+                    }
+                };
+        pool.execute(new TargetTask());
+        ThreadUtil.sleepSeconds(10);
+        Print.tco("关闭线程池");
+        pool.shutdown();
+    }
 }
